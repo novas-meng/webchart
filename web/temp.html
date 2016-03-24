@@ -2,25 +2,64 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn" dir="ltr" >
 <head>
+    <script type="text/javascript" src="jquery-2.2.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("butto").click(function(){
+                $("p").html("W3School");
+            });
+        });
+        function getDate() {
+            var objS = document.getElementById("dataselect");
+            var dataselect = objS.options[objS.selectedIndex].value;
+            $.get("http://localhost:8080/webchart/DataAccess?dataselect="+dataselect,null,function(data){
+                var obj=document.getElementById("myselect");
+                // print("fdafaf");
+                //添加一个选项
+                 obj.add(new Option(data,data));    //这个只能在IE中有效
+                 $("#result").html(data);
+            });
+
+        }
+
+    </script>
     <base href="http://smc.hit.edu.cn/qthdata/index.php/sample-sites" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Super User" />
     <meta name="generator" content="Joomla! - Open Source Content Management" />
     <title>数据中心</title>
-    <link href="/qthdata/templates/beez_20/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <style type="text/css">
+        body{
+            margin:0px;
+        }
+
+        .test1{
+            margin-top:20px;
+        }
+        .test2{
+            margin-left:20px;
+        }
+
+        .test2_son{
+            width:80px;
+            height:50px;
+            border:12px solid blue;
+        }
+    </style>
+    <link href="templates/beez_20/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     <link href="http://smc.hit.edu.cn/qthdata/index.php/component/search/?Itemid=238&amp;format=opensearch" rel="search" title="搜索 青藏高速公路灾变监控数据平台" type="application/opensearchdescription+xml" />
-    <link rel="stylesheet" href="/qthdata/templates/system/css/system.css" type="text/css" />
-    <link rel="stylesheet" href="/qthdata/templates/beez_20/css/position.css" type="text/css" media="screen,projection"  />
-    <link rel="stylesheet" href="/qthdata/templates/beez_20/css/layout.css" type="text/css" media="screen,projection"  />
-    <link rel="stylesheet" href="/qthdata/templates/beez_20/css/print.css" type="text/css" media="print"  />
-    <link rel="stylesheet" href="/qthdata/templates/beez_20/css/general.css" type="text/css" />
-    <link rel="stylesheet" href="/qthdata/templates/beez_20/css/nature.css" type="text/css" />
-    <script src="/qthdata/media/system/js/mootools-core.js" type="text/javascript"></script>
-    <script src="/qthdata/media/system/js/core.js" type="text/javascript"></script>
-    <script src="/qthdata/media/system/js/caption.js" type="text/javascript"></script>
-    <script src="/qthdata/media/system/js/mootools-more.js" type="text/javascript"></script>
-    <script src="/qthdata/templates/beez_20/javascript/md_stylechanger.js" type="text/javascript"></script>
-    <script src="/qthdata/templates/beez_20/javascript/hide.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://localhost:8080/webchart/templates/system/css/system.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/webchart/templates/beez_20/css/position.css" type="text/css" media="screen,projection"  />
+    <link rel="stylesheet" href="http://localhost:8080/webchart/templates/beez_20/css/layout.css" type="text/css" media="screen,projection"  />
+    <link rel="stylesheet" href="http://localhost:8080/webchart/templates/beez_20/css/print.css" type="text/css" media="print"  />
+    <link rel="stylesheet" href="http://localhost:8080/webchart/templates/beez_20/css/general.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/webchart/templates/beez_20/css/nature.css" type="text/css" />
+    <script src="http://localhost:8080/webchart/media/system/js/mootools-core.js" type="text/javascript"></script>
+    <script src="http://localhost:8080/webchart/media/system/js/core.js" type="text/javascript"></script>
+    <script src="http://localhost:8080/webchart/media/system/js/caption.js" type="text/javascript"></script>
+    <script src="http://localhost:8080/webchart/media/system/js/mootools-more.js" type="text/javascript"></script>
+    <script src="http://localhost:8080/webchart/templates/beez_20/javascript/md_stylechanger.js" type="text/javascript"></script>
+    <script src="http://localhost:8080/webchart/templates/beez_20/javascript/hide.js" type="text/javascript"></script>
     <script type="text/javascript">
         window.addEvent('load', function() {
             new JCaption('img.caption');
@@ -29,11 +68,11 @@
 
 
     <!--[if lte IE 6]>
-    <link href="/qthdata/templates/beez_20/css/ieonly.css" rel="stylesheet" type="text/css" />
+    <link href="http://localhost:8080/webchart/templates/beez_20/css/ieonly.css" rel="stylesheet" type="text/css" />
     <![endif]-->
 
     <!--[if IE 7]>
-    <link href="/qthdata/templates/beez_20/css/ie7only.css" rel="stylesheet" type="text/css" />
+    <link href="http://localhost:8080/webchart/templates/beez_20/css/ie7only.css" rel="stylesheet" type="text/css" />
     <![endif]-->
 
     <script type="text/javascript">
@@ -41,8 +80,8 @@
         var small='53%';
         var altopen='已关闭';
         var altclose='已关闭';
-        var bildauf='/qthdata/templates/beez_20/images/plus.png';
-        var bildzu='/qthdata/templates/beez_20/images/minus.png';
+        var bildauf='http://localhost:8080/webchart/templates/beez_20/images/plus.png';
+        var bildzu='http://localhost:8080/webchart/templates/beez_20/images/minus.png';
         var rightopen='打开特殊栏';
         var rightclose='关闭特殊栏';
         var fontSizeTitle='字体大小：';
@@ -64,7 +103,7 @@
             <div class="logoheader">
                 <h1 id="logo">
 
-                    <img src="/qthdata/images/joomla_black.gif"  alt="青藏高速公路灾变监控数据平台" />
+                    <img src="http://localhost:8080/webchart/images/joomla_black.gif"  alt="青藏高速公路灾变监控数据平台" />
                                                                                                                         <span class="header1">
                                         Disaster Monitoring Data Platform for Qinghai-Tibet Highway                                        </span></h1>
             </div><!-- end logoheader -->
@@ -98,7 +137,7 @@
 
 
                 <div class="breadcrumbs">
-                    <span class="showHere">当前位置：</span><a href="/qthdata/" class="pathway">Home</a> <img src="/qthdata/templates/beez_20/images/system/arrow.png" alt=""  /> <span>数据中心</span></div>
+                    <span class="showHere">当前位置：</span><a href="/qthdata/" class="pathway">Home</a> <img src="http://localhost:8080/webchart/templates/beez_20/images/system/arrow.png" alt=""  /> <span>数据中心</span></div>
 
 
             </div>
@@ -126,7 +165,9 @@
 
 
             </div><!-- end navi -->
-
+            <h2>This is a heading</h2>
+            <p>This is a paragraph.</p>
+            <p>This is another paragraph.</p>
             <div id="wrapper2" >
 
                 <div id="main">
@@ -136,22 +177,29 @@
                     <div id="system-message-container">
                     </div>
                     <div class="item-page">
+                        <!-- 在这里写代码 -->
+                        <div >
+                            请选择数据
+                            <select class="test2" id="dataselect" onclick="getDate()">
+                                <option value="luji_1" onclick="getDate()">一号观测场变形</option>
+                                <option value="luji_2">二号观测场变形</option>
+                                <option value="luji_3">三号观测场变形</option>
+                                <option value="luji_4">一号观测场变形数据校准</option>
+                                <option value="luji_5">二号观测场变形数据校准</option>
+                                <option value="luji_6">三号观测场变形数据校准</option>
+                            </select>
+                        </div>
+                        <p id="result">This is another paragraph.</p>
+                        <button type="button" onclick="VeryRegAccount()" >请点击这里</button>
+                        <div class="test1">
+                            查询开始日期
+                            <select id="myselect">
+                            </select>
+                            查询结束日期
+                            <select id="aselect">
+                            </select>
+                        </div>
 
-                        <h2>
-                            <a href="/qthdata/index.php/sample-sites">
-                                数据中心</a>
-                        </h2>
-
-
-
-
-
-
-
-
-                        <p>数据中心包括青藏公路、青藏高速公路多年来在路基、路面、桥梁、隧道等构筑物上采集的环境和响应数据，针对不同的构筑物包括温度、变形、应变、振动加速度等。</p>
-                        <p>左侧菜单提供了数据查询的入口，选择相应菜单可以查询、下载所有相关数据。</p>
-                        <p>注：所有数据只针对特定用户开放。</p>
 
                     </div>
 
@@ -190,4 +238,61 @@
 </div>
 
 </body>
+
+<script type="text/javascript">
+
+    document.getElementById("123").innerText="mengfanshan";
+    function a(){
+        var b=1;
+
+        document.getElementById("123").innerHTML="mengfanshan";
+        return b;
+    }
+    document.getElementById("reset").onclick = function(){
+        // 你的代码
+        print("fdafaf");
+
+        test();
+    };
+    function option(){
+        //根据id查找对象，
+        var arrayObj = new Array();
+        arrayObj. push("1");
+        arrayObj. push("2");
+        var fso = new ActiveXObject("Scripting.FileSystemObject");
+        var f = fso.OpenTextFile("luji_1.csv", ForReading, false); //读文件
+        alert(f.ReadLine());
+        var obj=document.getElementById('select');
+        // print("fdafaf");
+        //添加一个选项
+        // obj.add(new Option("文本","值"));    //这个只能在IE中有效
+    }
+
+
+    function gradeChange(){
+       // var f1=new File();
+        if (!window.FileReader) {
+            alert("Not supported by your browser!");
+        } else {
+            File
+            f = new File("http://localhost:8080/webchart/luji_1.csv");
+            var reader = new FileReader();
+            reader.onload = function () {
+                // document.getElementById("filecontent").innerHTML = this.result;
+                alert(this.result);
+            };
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+            var f1 = fso.createtextfile("myjstest.txt", true);
+            reader.readAsText(file);
+        }
+        var objS = document.getElementById("pid");
+        var grade = objS.options[objS.selectedIndex].value;
+      //  option();
+      //  var fs=new FileReader("luji_1.csv");
+      //  fs.readAsText(f1);
+       // alert(f1);
+        alert(grade);
+    }
+
+</script>
 </html>

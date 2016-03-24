@@ -11,4 +11,12 @@
         <servlet-name>DisplayChart</servlet-name>
         <url-pattern>/DisplayChart</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DataAccess</servlet-name>
+        <servlet-class>com.novas.chart.DataAccess</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DataAccess</servlet-name>
+        <url-pattern>/DataAccess</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -173,7 +173,8 @@
           <div class="item-page">
 
             <h2>
-              <a href="javascript:void(0);" onclick="test() ">novasnovasnovas</a>
+              <a href="javascript:void(0);" onclick="test() ">novpppsnovasnovas</a>
+              <a value="faffa" id="123"></a>
               <a href="/qthdata/index.php/sample-sites">
                 数据中心</a>
             </h2>
@@ -182,10 +183,20 @@
             <form action="form_action.asp" method="get">
               <p>First name: <input type="text" name="fname" /></p>
               <p>Last name: <input type="text" name="lname" /></p>
+
               <script type="text/javascript">
                 function test()
                 {
+                  print("fdafaf");
                   alert("调用js函数的方法");
+                }
+                function option(){
+                  //根据id查找对象，
+                  var obj=document.getElementById("select");
+                  alert("调用js函数的方法");
+                  //添加一个选项
+                  // obj.add(new Option("文本","值"));    //这个只能在IE中有效
+                  obj.options.add(new Option("text","value")); //这个兼容IE与firefox
                 }
                 var big ='72%';
                 var small='53%';
@@ -203,11 +214,14 @@
                 var resetTitle='恢复默认样式';
                 var smallerTitle='减小尺寸';
               </script>
-              <select>
-                <option value =<%= graphURL %>>reset</option>
+              <select id="pid" onchange="gradeChange()">
+                <option value =<%= graphURL %> id="reset">reset</option>
                 <option value ="2">Saab</option>
                 <option value="3">Opel</option>
                 <option value="4">Audi</option>
+              </select>
+              <select id="select">
+
               </select>
               <input type="submit" value="Submit" />
             </form>
@@ -256,6 +270,38 @@
 </div>
 
 </body>
-</html>
+<script type="text/javascript">
+  document.getElementById("123").innerText="mengfanshan";
+  function a(){
+    var b=1;
 
---%>
+    document.getElementById("123").innerHTML="mengfanshan";
+    return b;
+  }
+  document.getElementById("reset").onclick = function(){
+    // 你的代码
+    print("fdafaf");
+
+    test();
+  };
+  function option(){
+    //根据id查找对象，
+    var arrayObj = new Array();
+    arrayObj. push("1");
+    arrayObj. push("2");
+
+    var obj=document.getElementById('select');
+   // print("fdafaf");
+    //添加一个选项
+   // obj.add(new Option("文本","值"));    //这个只能在IE中有效
+
+
+  }
+  function gradeChange(){
+    var objS = document.getElementById("pid");
+    var grade = objS.options[objS.selectedIndex].value;
+    option();
+    alert(grade);
+  }
+</script>
+</html>
