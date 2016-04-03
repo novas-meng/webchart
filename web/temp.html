@@ -1,6 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn" dir="ltr" >
+
 <head>
     <script type="text/javascript" src="jquery-2.2.2.min.js"></script>
     <script type="text/javascript">
@@ -9,15 +10,107 @@
                 $("p").html("W3School");
             });
         });
-        function getDate() {
+        function getEndDay(month)
+        {
+            var objS = document.getElementById("endyear");
+            var year = objS.options[objS.selectedIndex].value;
+
             var objS = document.getElementById("dataselect");
             var dataselect = objS.options[objS.selectedIndex].value;
-            $.get("http://localhost:8080/webchart/DataAccess?dataselect="+dataselect,null,function(data){
-                var obj=document.getElementById("myselect");
+            $.get("http://localhost:8080/webchart/DataAccess?dataselect="+dataselect,{"type":"day","year":year,"month":month},function(data){
+                var options=data.split(" ");
+                var obj2=document.getElementById("endday");
+                //添加一个选项
+                obj2.length=0;
+                for(var k=0;k < options.length;k++)
+                {
+                    obj2.add(new Option(options[k],options[k]));
+
+                }
+            });
+        }
+        function getStartDay(month)
+        {
+           // alert(year);
+           // alert(month);
+            var objS = document.getElementById("startyear");
+            var year = objS.options[objS.selectedIndex].value;
+
+            var objS = document.getElementById("dataselect");
+            var dataselect = objS.options[objS.selectedIndex].value;
+            $.get("http://localhost:8080/webchart/DataAccess?dataselect="+dataselect,{"type":"day","year":year,"month":month},function(data){
+                var options=data.split(" ");
+                var obj1=document.getElementById("startday");
+                //添加一个选项
+                obj1.length=0;
+                for(var k=0;k < options.length;k++)
+                {
+                    var op1=new Option(options[k],options[k]);
+                    obj1.add(op1);
+                }
+            });
+
+        }
+        function getEndMonth(year)
+        {
+            var objS = document.getElementById("dataselect");
+            var dataselect = objS.options[objS.selectedIndex].value;
+            $.get("http://localhost:8080/webchart/DataAccess?dataselect="+dataselect,{"type":"month","year":year},function(data){
+                var options=data.split(" ");
+                var obj3=document.getElementById("endmonth");
                 // print("fdafaf");
                 //添加一个选项
-                 obj.add(new Option(data,data));    //这个只能在IE中有效
-                 $("#result").html(data);
+                obj3.length=0;
+                for(var k=0;k < options.length;k++)
+                {
+                    var op1=new Option(options[k],options[k]);
+                    obj3.add(op1);
+                }
+                    obj3[0].onClick=getEndDay(options[0]);
+            });
+
+        }
+        function getStartMonth(year)
+        {
+            //alert(year);
+            var objS = document.getElementById("dataselect");
+            var dataselect = objS.options[objS.selectedIndex].value;
+            $.get("http://localhost:8080/webchart/DataAccess?dataselect="+dataselect,{"type":"month","year":year},function(data){
+                var options=data.split(" ");
+                var obj3=document.getElementById("startmonth");
+                // print("fdafaf");
+                //添加一个选项
+                obj3.length=0;
+                for(var k=0;k < options.length;k++)
+                {
+                    var op1=new Option(options[k],options[k]);
+                    obj3.add(op1);
+                }
+                    obj3[0].onClick=getStartDay(options[0]);
+            });
+
+        }
+        function getYear() {
+            var objS = document.getElementById("dataselect");
+            var dataselect = objS.options[objS.selectedIndex].value;
+            $.get("http://localhost:8080/webchart/DataAccess?dataselect="+dataselect,{"type":"year"},function(data){
+                var options=data.split(" ");
+                var obj1=document.getElementById("startyear");
+                var obj2=document.getElementById("endyear");
+                // print("fdafaf");
+                //添加一个选项
+                obj1.length=0;
+                obj2.length=0;
+                for(var k=0;k < options.length;k++) {
+                    var op1 = new Option(options[k], options[k]);
+                    obj1.add(op1);
+                    var op2 = new Option(options[k], options[k]);
+                    obj2.add(op2);
+
+                }
+                var k=0;
+                   obj1[k].onClick=getStartMonth(options[k]);
+                    obj2[k].onClick=getEndMonth(options[k]);
             });
 
         }
@@ -165,23 +258,17 @@
 
 
             </div><!-- end navi -->
-            <h2>This is a heading</h2>
-            <p>This is a paragraph.</p>
-            <p>This is another paragraph.</p>
             <div id="wrapper2" >
 
                 <div id="main">
-
-
-
                     <div id="system-message-container">
                     </div>
                     <div class="item-page">
                         <!-- 在这里写代码 -->
                         <div >
                             请选择数据
-                            <select class="test2" id="dataselect" onclick="getDate()">
-                                <option value="luji_1" onclick="getDate()">一号观测场变形</option>
+                            <select class="test2" id="dataselect" onclick="getYear()">
+                                <option value="luji_1" onclick="getYear()">一号观测场变形</option>
                                 <option value="luji_2">二号观测场变形</option>
                                 <option value="luji_3">三号观测场变形</option>
                                 <option value="luji_4">一号观测场变形数据校准</option>
@@ -189,18 +276,42 @@
                                 <option value="luji_6">三号观测场变形数据校准</option>
                             </select>
                         </div>
-                        <p id="result">This is another paragraph.</p>
-                        <button type="button" onclick="VeryRegAccount()" >请点击这里</button>
                         <div class="test1">
                             查询开始日期
-                            <select id="myselect">
-                            </select>
+                            <select id="startyear" onchange="getStartMonth(this[selectedIndex].innerHTML)"></select> 年
+                            <select id="startmonth" onchange="getStartDay(this[selectedIndex].innerHTML)" ></select>月
+                            <select id="startday"></select>日
+
                             查询结束日期
-                            <select id="aselect">
+                            <select id="endyear" onchange="getEndMonth(this[selectedIndex].innerHTML)" ></select> 年
+                            <select id="endmonth" onchange="getEndDay(this[selectedIndex].innerHTML)"></select>月
+                            <select id="endday"></select>日
                             </select>
                         </div>
-
-
+                        <div class="test1">
+                            <p>传感器选择</p>
+                            <label><input name="Fruit" type="checkbox" value="" />1 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />2 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />3 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />4 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />5 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />6 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />7 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />8 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />9 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />10 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />11 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />12 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />13 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />14 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />15 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />16 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />17 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />18 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />19 </label>
+                            <label><input name="Fruit" type="checkbox" value="" />20 </label>
+                        </div>
+                        <button type="button" onclick="VeryRegAccount()" >开始查询</button>
                     </div>
 
 
